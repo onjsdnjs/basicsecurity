@@ -1,6 +1,7 @@
 package io.security.demo;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -9,23 +10,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN", "SYS");
+        auth.inMemoryAuthentication().withUser("user").password(" user ").roles("USER");
+    }
+
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
+                .antMatchers("/users").hasRole("USER")
+
         .and()
-                .formLogin()
-                .defaultSuccessUrl("/home")
-                .failureUrl("/login.html?error=true")
-                .and()
-                .logout()
-	            .logoutSuccessUrl("/login")
-        .and()
-                .sessionManagement()
-                .invalidSessionUrl("/invalid")
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
-        .and()
-                .sessionFixation().migrateSession();
+                .formLogin();
+
+
     }
 }
