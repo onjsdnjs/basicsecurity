@@ -12,21 +12,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
-        .and()
-                .httpBasic();
-    }
-}
-
-
-@Configuration
-class SecurityConfig2 extends WebSecurityConfigurerAdapter {
-
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin();
+                .anyRequest().authenticated();
     }
 }
