@@ -19,6 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login.html?error=true")
                 .and()
                 .logout()
-	            .logoutSuccessUrl("/login");
+	            .logoutSuccessUrl("/login")
+        .and()
+                .rememberMe()
+                .rememberMeParameter("remember") // Default 는 remember-me
+                .tokenValiditySeconds(3600) // 메모리 저장소 Default 는 14일
+                .key( "springsecurity");
     }
 }
