@@ -24,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .invalidSessionUrl("/invalid")
                 .maximumSessions(1)
-                .maxSessionsPreventsLogin(true);
+                .maxSessionsPreventsLogin(true)
+        .and()
+                .sessionFixation().migrateSession();
     }
 }
