@@ -17,3 +17,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 }
+
+
+@Configuration
+class SecurityConfig2 extends WebSecurityConfigurerAdapter {
+
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin();
+    }
+}
