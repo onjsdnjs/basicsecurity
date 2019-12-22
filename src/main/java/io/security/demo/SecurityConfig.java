@@ -12,9 +12,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user").hasRole("ROLE_USER")
+                .antMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
         .and()
-                .httpBasic();
+                .formLogin();
     }
 }
