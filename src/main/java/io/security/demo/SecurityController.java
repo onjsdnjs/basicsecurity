@@ -10,4 +10,9 @@ public class SecurityController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/user")
+    public String user(){
+        return "user";
+    }
 }
