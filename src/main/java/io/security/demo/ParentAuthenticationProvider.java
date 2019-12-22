@@ -1,23 +1,27 @@
 package io.security.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public class ParentAuthenticationProvider implements AuthenticationProvider {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        List<SimpleGrantedAuthority> roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(new User("user", "1111", roles), null, roles);
-        user.setAuthenticated(false);
+        UserContext userContext = (UserContext)userDetailsService.loadUserByUsername(authentication.getName());
+
+        if(authentication.getName().equals(userContext.getUser().getPassword())){
+            throw new BadCredentialsException("BadCredentialsException");
+        }
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(userContext, null, userContext.getUser().getRoles());
         return user;
     }
 
