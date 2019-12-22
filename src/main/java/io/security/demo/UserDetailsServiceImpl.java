@@ -13,6 +13,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        // User user = UserRepository.findByUsername(username);
+
         UserDto user = new UserDto();
         user.setUsername(username);
         user.setPassword("1111");
