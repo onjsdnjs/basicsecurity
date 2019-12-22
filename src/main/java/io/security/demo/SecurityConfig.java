@@ -25,9 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @Autowired(required = false)
-    private ObjectPostProcessor<Object> objectObjectPostProcessor;
-
+//    @Bean
 //    @Override
 //    public AuthenticationManager authenticationManagerBean() throws Exception {
 //        return super.authenticationManagerBean();
@@ -56,9 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
         .and()
                 .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
-//        FilterSecurityInterceptor filterSecurityInterceptor = http.getSharedObject(FilterSecurityInterceptor.class);
-//        filterSecurityInterceptor.setAlwaysReauthenticate(true);
     }
 
     @Bean

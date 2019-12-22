@@ -16,7 +16,9 @@ public class ParentAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         List<SimpleGrantedAuthority> roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-        return new UsernamePasswordAuthenticationToken(new User("user", "1111", roles), null, roles);
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(new User("user", "1111", roles), null, roles);
+        user.setAuthenticated(false);
+        return user;
     }
 
     @Override
