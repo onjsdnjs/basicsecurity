@@ -22,7 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/user").hasRole("USER")
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
         .and()
                 .formLogin();
@@ -32,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Profile("affirmative")
     public AccessDecisionManager affirmativeBased() {
         AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
+        accessDecisionManager.setAllowIfAllAbstainDecisions(false);
         return accessDecisionManager;
     }
 
