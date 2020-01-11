@@ -1,0 +1,11 @@
+### Basic authorization.
+GET http://localhost:8080
+Authorization: Basic user 1112
+
+### Send POST request with body as parameters
+POST http://localhost:8080
+Content-Type: application/x-www-form-urlencoded
+
+id=999&value=content
+
+###
