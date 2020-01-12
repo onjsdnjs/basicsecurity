@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
         .and()
                 .formLogin()
-                .loginPage("/loginPage")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
@@ -57,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         response.sendRedirect("/login");
                     }
                 })
-                .deleteCookies("JSESSIONID")
+
         ;
 
     }
