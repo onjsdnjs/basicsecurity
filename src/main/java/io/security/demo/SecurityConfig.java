@@ -25,8 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
         .and()
                 .rememberMe()
+                .alwaysRemember(false) //form 에서 파라미터를 넘겨주지 않아도 항상 리멤버 함. Default 는 false
                 .rememberMeParameter("remember") // Default 는 remember-me
                 .tokenValiditySeconds(3600) // 메모리 저장소 Default 는 14일
-        ;
+                .key("security"); // Default 는 UUID
+
     }
 }
