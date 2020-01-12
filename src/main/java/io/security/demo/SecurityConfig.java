@@ -24,26 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/loginPage").permitAll()
                 .anyRequest().authenticated()
         .and()
-                .formLogin()
-                .loginPage("/loginPage")
-                .loginProcessingUrl("/login_proc")
-                .defaultSuccessUrl("/")
-                .failureUrl("/login?error=true")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        System.out.println("success");
-                        response.sendRedirect("/");
-                    }
-                })
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                        System.out.println("failure");
-                        response.sendRedirect("/login");
-                    }
-                });
+                .rememberMe()
+                .alwaysRemember(false) //form 에서 파라미터를 넘겨주지 않아도 항상 리멤버 함. Default 는 false
+                .rememberMeParameter("remember") // Default 는 remember-me
+                .tokenValiditySeconds(3600) // 메모리 저장소 Default 는 14일
+                .key("security"); // Default 는 UUID
+
     }
 }
