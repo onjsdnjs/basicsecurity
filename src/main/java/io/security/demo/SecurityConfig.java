@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/loginPage").permitAll()
+                .antMatchers("/").hasAnyAuthority("ROLE_ANONYMOUS")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -67,7 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeParameter("remember") // Default 는 remember-me
                 .tokenValiditySeconds(3600) // 메모리 저장소 Default 는 14일
                 .userDetailsService(userDetailsService)
-                .key("security"); // Default 는 UUID
+                .key("security")
+        .and()
+            .anonymous()
+
+        ; // Default 는 UUID
 
     }
 }
