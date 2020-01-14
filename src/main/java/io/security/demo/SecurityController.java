@@ -10,4 +10,14 @@ public class SecurityController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/invalid")
+    public String invalid(){
+        return "세션이 중복되었습니다.";
+    }
+
+    @GetMapping("/expired")
+    public String expired(){
+        return "세션이 만료되었습니다..";
+    }
 }
