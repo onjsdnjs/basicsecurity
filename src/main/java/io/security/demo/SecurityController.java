@@ -16,6 +16,16 @@ public class SecurityController {
         return "denied";
     }
 
+    @GetMapping("/user")
+    public String user(){
+        return "user";
+    }
+
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin";
+    }
+
     @GetMapping("login")
     public String login(){
         return "custom login";
