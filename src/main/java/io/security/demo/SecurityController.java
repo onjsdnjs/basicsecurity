@@ -20,4 +20,9 @@ public class SecurityController {
     public String admin(){
         return "admin";
     }
+
+    @GetMapping("/admin/payment")
+    public String adminPayment(){
+        return "adminPayment";
+    }
 }
