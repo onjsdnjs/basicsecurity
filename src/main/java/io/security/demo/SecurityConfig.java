@@ -12,8 +12,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("1111").roles("ADMIN", "SYS");
-        auth.inMemoryAuthentication().withUser("user").password(" 1111 ").roles("USER");
+        auth.inMemoryAuthentication().withUser("admin").password("{noop}1111").roles("ADMIN", "SYS");
+        auth.inMemoryAuthentication().withUser("user").password("{noop}1111 ").roles("USER");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").hasRole("USER")
                 .antMatchers("/admin/payment").access("hasRole('ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
+                .anyRequest().authenticated()
 
         .and()
                 .formLogin();
