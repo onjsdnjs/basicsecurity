@@ -51,18 +51,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
         .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new AuthenticationEntryPoint() {
-                        @Override
-                        public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-                            response.sendRedirect("/login");
-                        }
-        })
                 .accessDeniedPage("/denied")
                 .accessDeniedHandler(new AccessDeniedHandler() {
                     @Override
                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
                         System.out.println("Access Denied");
                         response.sendRedirect("/denied");
+                    }
+                })
+                .authenticationEntryPoint(new AuthenticationEntryPoint() {
+                    @Override
+                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+                        response.sendRedirect("/login");
                     }
                 })
         ;

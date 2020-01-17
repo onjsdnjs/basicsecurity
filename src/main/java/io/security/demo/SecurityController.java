@@ -11,11 +11,6 @@ public class SecurityController {
         return "index";
     }
 
-    @GetMapping("/denied")
-    public String denied(){
-        return "denied";
-    }
-
     @GetMapping("/user")
     public String user(){
         return "user";
@@ -29,5 +24,10 @@ public class SecurityController {
     @GetMapping("login")
     public String login(){
         return "custom login";
+    }
+
+    @GetMapping("/denied")
+    public String denied(){
+        return "denied";
     }
 }
