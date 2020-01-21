@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public class ParentAuthenticationProvider implements AuthenticationProvider {
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -18,7 +18,7 @@ public class ParentAuthenticationProvider implements AuthenticationProvider {
 
         UserContext userContext = (UserContext)userDetailsService.loadUserByUsername(authentication.getName());
 
-        if(authentication.getName().equals(userContext.getUser().getPassword())){
+        if(!authentication.getCredentials().equals(userContext.getPassword())){
             throw new BadCredentialsException("BadCredentialsException");
         }
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(userContext, null, userContext.getUser().getRoles());
