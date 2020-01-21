@@ -18,6 +18,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserDto user = new UserDto();
         user.setUsername(username);
         user.setPassword("1111");
+        user.setAddress("서울");
+        user.setTel("000-0000-0000");
         user.setRoles(Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
 
         if (user == null) {

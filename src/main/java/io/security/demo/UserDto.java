@@ -8,7 +8,8 @@ public class UserDto{
 
     private String username;
     private String password;
-    private List<SimpleGrantedAuthority> roles;
+    private String address;
+    private String tel;    private List<SimpleGrantedAuthority> roles;
 
     public String getUsername() {
         return username;
@@ -24,6 +25,22 @@ public class UserDto{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public List<SimpleGrantedAuthority> getRoles() {
