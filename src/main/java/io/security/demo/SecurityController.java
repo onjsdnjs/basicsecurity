@@ -31,4 +31,22 @@ public class SecurityController {
         System.out.println("user: " + authentication.getName());
 
     }
+
+    @GetMapping("/thread")
+    public String thread(HttpSession session){
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                        System.out.println("authentication = " + authentication.getName());*/
+
+                        Object context = session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+                        Authentication authentication = ((SecurityContext) context).getAuthentication();
+                        System.out.println("authentication = " + authentication.getName());
+                    }
+                }
+        ).start();
+        return "thread";
+    }
 }
