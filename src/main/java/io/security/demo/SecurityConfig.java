@@ -26,31 +26,23 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    //5
     @Autowired
     AuthenticationManagerBuilder authenticationManagerBuilder;
 
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .and()
+                .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new AuthenticationProvider() {
-            @Override
-            public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                return null;
-            }
-
-            @Override
-            public boolean supports(Class<?> authentication) {
-                return false;
-            }
-        });
+        ;
     }
 
+    // 1
     public AuthenticationManager parentAuthenticationManager() {
         List<AuthenticationProvider> authProviderList = new ArrayList<>();
         authProviderList.add(new ParentAuthenticationProvider());
@@ -59,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return providerManager;
     }
 
+    // 2
     public AuthenticationManager childAuthenticationManager() {
         List<AuthenticationProvider> authProviderList = new ArrayList<>();
         authProviderList.add(new ChildAuthenticationProvider());
@@ -66,19 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.parentAuthenticationManager(providerManager);
         return providerManager;
     }
-
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-        .and()
-                .formLogin()
-        .and()
-                .rememberMe()
-        .and()
-                .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
-
+    //4
     @Bean
     public AuthenticationFilter authenticationFilter() {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter();
