@@ -11,21 +11,17 @@ import java.util.Arrays;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        // User user = UserRepository.findByUsername(username);
-
-        UserDto user = new UserDto();
-        user.setUsername(username);
-        user.setPassword("1111");
-        user.setAddress("서울");
+        UserContext user = new UserContext("user","1111", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        user.setName("홍길동");
+        user.setAge("10");
         user.setTel("000-0000-0000");
-        user.setRoles(Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
 
-        if (user == null) {
-            throw new UsernameNotFoundException("No user found with username: " + username);
+        if(user == null){
+            throw new UsernameNotFoundException("No user found with username : " + username);
         }
-
-        return new UserContext(user);
+        return user;
     }
 }

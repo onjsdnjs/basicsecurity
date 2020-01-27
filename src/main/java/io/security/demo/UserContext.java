@@ -1,20 +1,40 @@
 package io.security.demo;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.Collection;
+
 public class UserContext extends User {
-  private UserDto user;
+    public UserContext(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
+    }
 
-  public UserContext(UserDto user) {
-    super(user.getUsername(), user.getPassword(), user.getRoles());
-    this.user = user;
-  }
+    private String name;
+    private String age;
+    private String tel;
 
-  public UserDto getUser() {
-    return user;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setUser(UserDto user) {
-    this.user = user;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 }
