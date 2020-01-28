@@ -39,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
         ;
-
     }
 
     @Bean
