@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,12 +16,12 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@Order(0)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(2)
+public class SecurityConfig3 extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/user")
+                .antMatcher("/admin")
                 .authorizeRequests()
                 .anyRequest().permitAll()
         ;
@@ -29,12 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-//    @Profile("affirmative")
-    public AccessDecisionManager affirmativeBased(FilterChainProxy filterChainProxy) {
+//    @Profile("unanimous")
+    public AccessDecisionManager unanimousBased(FilterChainProxy filterChainProxy) {
 
-        AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
-        CommonUtil.setFilterSecurityInterceptor(filterChainProxy, accessDecisionManager, "/user");
+        UnanimousBased accessDecisionManager = new UnanimousBased(getAccessDecisionVoters());
+        accessDecisionManager.setAllowIfAllAbstainDecisions(false);
+        CommonUtil.setFilterSecurityInterceptor(filterChainProxy, accessDecisionManager, "/admin");
 
         return accessDecisionManager;
     }
@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DeniedVoter deniedVoter = new DeniedVoter();
         AbstainVoter abstainVoter = new AbstainVoter();
 
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(deniedVoter, grantedVoter, deniedVoter);
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(grantedVoter, grantedVoter, deniedVoter);
         return accessDecisionVoterList;
     }
 }

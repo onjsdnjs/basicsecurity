@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.ConsensusBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.FilterChainProxy;
 
@@ -15,26 +14,26 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity
-@Order(0)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(1)
+public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/user")
+                .antMatcher("/manager")
                 .authorizeRequests()
                 .anyRequest().permitAll()
-        ;
+                ;
 
     }
 
     @Bean
-//    @Profile("affirmative")
-    public AccessDecisionManager affirmativeBased(FilterChainProxy filterChainProxy) {
+//    @Profile("consensus")
+    public AccessDecisionManager consensusBased(FilterChainProxy filterChainProxy) {
 
-        AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false); // 접근 승인 거부 보류시 접근 허용은 true 접근 거부는 false
-        CommonUtil.setFilterSecurityInterceptor(filterChainProxy, accessDecisionManager, "/user");
+        ConsensusBased accessDecisionManager = new ConsensusBased(getAccessDecisionVoters());
+        accessDecisionManager.setAllowIfAllAbstainDecisions(false);
+        accessDecisionManager.setAllowIfEqualGrantedDeniedDecisions(false);
+        CommonUtil.setFilterSecurityInterceptor(filterChainProxy, accessDecisionManager, "/manager");
 
         return accessDecisionManager;
     }
