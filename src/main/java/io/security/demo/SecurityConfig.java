@@ -89,14 +89,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filterSecurityInterceptor.setAccessDecisionManager(accessDecisionManager);
     }
 
-    private Filter getSecurityFilter(FilterChainProxy filterChainProxy, Class<FilterSecurityInterceptor> filterSecurityInterceptorClass) {
+    private Filter getSecurityFilter(FilterChainProxy filterChainProxy, Class<?> filterClass) {
 
         List<SecurityFilterChain> filterChains = filterChainProxy.getFilterChains();
         SecurityFilterChain securityFilterChain = filterChains.get(0);
         List<Filter> filters = securityFilterChain.getFilters();
 
         for(Filter filter :filters){
-            if(filter.getClass().isAssignableFrom(filterSecurityInterceptorClass)){
+            if(filter.getClass().isAssignableFrom(filterClass)){
                 return filter;
             };
         }
