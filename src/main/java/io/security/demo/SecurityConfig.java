@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
-        Grantedvoter grantedvoter = new Grantedvoter();
+        GrantedVoter grantedvoter = new GrantedVoter();
         DeniedVoter deniedVoter = new DeniedVoter();
         AbstainVoter abstainVoter = new AbstainVoter();
 

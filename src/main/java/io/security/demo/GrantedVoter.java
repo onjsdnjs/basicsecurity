@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
 
-public class Grantedvoter implements AccessDecisionVoter {
+public class GrantedVoter implements AccessDecisionVoter {
     @Override
     public boolean supports(ConfigAttribute attribute) {
         return true;
