@@ -1,6 +1,5 @@
 package io.security.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -86,11 +85,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private void setFilterSecurityInterceptor(FilterChainProxy filterChainProxy, AccessDecisionManager accessDecisionManager) {
-        FilterSecurityInterceptor filterSecurityInterceptor = (FilterSecurityInterceptor)getFilterSecurityInterceptor(filterChainProxy, FilterSecurityInterceptor.class);
+        FilterSecurityInterceptor filterSecurityInterceptor = (FilterSecurityInterceptor) getSecurityFilter(filterChainProxy, FilterSecurityInterceptor.class);
         filterSecurityInterceptor.setAccessDecisionManager(accessDecisionManager);
     }
 
-    private Filter getFilterSecurityInterceptor(FilterChainProxy filterChainProxy, Class<FilterSecurityInterceptor> filterSecurityInterceptorClass) {
+    private Filter getSecurityFilter(FilterChainProxy filterChainProxy, Class<FilterSecurityInterceptor> filterSecurityInterceptorClass) {
 
         List<SecurityFilterChain> filterChains = filterChainProxy.getFilterChains();
         SecurityFilterChain securityFilterChain = filterChains.get(0);
