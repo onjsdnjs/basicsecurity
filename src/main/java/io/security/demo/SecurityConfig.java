@@ -29,7 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-//    @Profile("affirmative")
     public AccessDecisionManager affirmativeBased(FilterChainProxy filterChainProxy) {
 
         AffirmativeBased accessDecisionManager = new AffirmativeBased(getAccessDecisionVoters());

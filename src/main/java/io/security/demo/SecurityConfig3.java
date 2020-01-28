@@ -29,7 +29,6 @@ public class SecurityConfig3 extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-//    @Profile("unanimous")
     public AccessDecisionManager unanimousBased(FilterChainProxy filterChainProxy) {
 
         UnanimousBased accessDecisionManager = new UnanimousBased(getAccessDecisionVoters());

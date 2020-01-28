@@ -27,7 +27,6 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-//    @Profile("consensus")
     public AccessDecisionManager consensusBased(FilterChainProxy filterChainProxy) {
 
         ConsensusBased accessDecisionManager = new ConsensusBased(getAccessDecisionVoters());
