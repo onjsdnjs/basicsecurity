@@ -9,8 +9,14 @@ import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.FilterChainProxy;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +30,14 @@ public class SecurityConfig3 extends WebSecurityConfigurerAdapter {
                 .antMatcher("/admin")
                 .authorizeRequests()
                 .anyRequest().permitAll()
+        .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new AuthenticationEntryPoint() {
+                    @Override
+                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+                        response.sendRedirect("/denied");
+                    }
+                })
         ;
 
     }
@@ -32,7 +46,6 @@ public class SecurityConfig3 extends WebSecurityConfigurerAdapter {
     public AccessDecisionManager unanimousBased(FilterChainProxy filterChainProxy) {
 
         UnanimousBased accessDecisionManager = new UnanimousBased(getAccessDecisionVoters());
-        accessDecisionManager.setAllowIfAllAbstainDecisions(false);
         CommonUtil.setFilterSecurityInterceptor(filterChainProxy, accessDecisionManager, "/admin");
 
         return accessDecisionManager;
@@ -44,7 +57,7 @@ public class SecurityConfig3 extends WebSecurityConfigurerAdapter {
         DeniedVoter deniedVoter = new DeniedVoter();
         AbstainVoter abstainVoter = new AbstainVoter();
 
-        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(grantedVoter, grantedVoter, deniedVoter);
+        List<AccessDecisionVoter<? extends Object>> accessDecisionVoterList = Arrays.asList(grantedVoter, deniedVoter, grantedVoter);
         return accessDecisionVoterList;
     }
 }
