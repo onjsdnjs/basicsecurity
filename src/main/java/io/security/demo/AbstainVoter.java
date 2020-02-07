@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
 
-public class AbstainVoter implements AccessDecisionVoter {
+public class AbstainVoter implements AccessDecisionVoter<Object> {
     @Override
     public boolean supports(ConfigAttribute attribute) {
         return true;
