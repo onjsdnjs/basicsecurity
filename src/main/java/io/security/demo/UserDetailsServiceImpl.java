@@ -1,6 +1,7 @@
 package io.security.demo;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,10 +15,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserContext user = new UserContext("user","1111", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
-        user.setName("홍길동");
-        user.setAge("10");
-        user.setTel("000-0000-0000");
+        UserDetails user = User.builder().username("홍길동")
+                .password("1111")
+                .authorities(Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")))
+                .build();
 
         if(user == null){
             throw new UsernameNotFoundException("No user found with username : " + username);
