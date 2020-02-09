@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
         .and()
                 .formLogin()
+//                .loginPage("/loginPage")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
@@ -51,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutRequestMatcher(new RequestHeaderRequestMatcher("/login"))
+//                .logoutRequestMatcher(new RequestHeaderRequestMatcher("/login"))
                 .addLogoutHandler(new LogoutHandler() {
                     @Override
                     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
