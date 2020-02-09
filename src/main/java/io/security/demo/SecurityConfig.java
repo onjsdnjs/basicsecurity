@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
@@ -31,12 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
         .and()
                 .sessionManagement()
-                .sessionFixation().changeSessionId()
-//                .invalidSessionUrl("/invalid")
-//                .maximumSessions(1)
-//                .expiredUrl("/expired")
-//                .maxSessionsPreventsLogin(true)
+                .invalidSessionUrl("/invalid")
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+//                .sessionFixation()
+//                .none()
+//                .changeSessionId()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         ;
+
     }
 }
