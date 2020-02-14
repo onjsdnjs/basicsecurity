@@ -14,18 +14,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("admin").password("{noop}1111").roles("ADMIN", "SYS");
         auth.inMemoryAuthentication().withUser("sys").password("{noop}1111").roles("SYS","USER");
-        auth.inMemoryAuthentication().withUser("user").password("{noop}1111 ").roles("USER");
+        auth.inMemoryAuthentication().withUser("leaven").password("{noop}1111").roles("USER");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/user").hasRole("USER")
-                .antMatchers("/admin/payment").access("hasRole('ADMIN')")
+                .antMatchers("/admin/pay").access("hasRole('ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
                 .anyRequest().authenticated()
 
         .and()
-                .formLogin();
+                .formLogin()
+        .and()
+                .httpBasic()
+        .and()
+                .rememberMe()
+                .alwaysRemember(true)
+        ;
+
     }
 }
