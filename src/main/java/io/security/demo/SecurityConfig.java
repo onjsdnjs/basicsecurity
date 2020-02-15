@@ -24,9 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
                 .rememberMe()
                 .userDetailsService(userDetailsService)
-        ;
+        .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);
 
-
-                ;
     }
 }
