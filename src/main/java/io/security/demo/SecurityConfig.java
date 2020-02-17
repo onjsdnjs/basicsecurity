@@ -66,7 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeParameter("remember") // Default 는 remember-me
                 .tokenValiditySeconds(3600) // 메모리 저장소 Default 는 14일
                 .userDetailsService(userDetailsService)
-                .key("security"); // Default 는 UUID
+                .key("security") // Default 는 UUID
+
+                ;
 
     }
 }
